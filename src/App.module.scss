@@ -1,0 +1,69 @@
+body {
+  background-color: aliceblue;
+}
+
+.container {
+  margin: auto;
+  max-width: 600px;
+
+  .todoBlock {
+    padding: 30px;
+    margin-top: 50px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      padding-bottom: 15px;
+    }
+
+    .todoContentContainer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 10px;
+      border-bottom: 1px #ccc dotted;
+
+      .deleteTodoButton {
+        color: white;
+        border: none;
+        padding: 5px 9px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .completedText {
+        text-decoration: line-through;
+      }
+    }
+
+    .todoInputWrapper {
+      display: flex;
+      margin-top: 15px;
+
+      .todoInput {
+        flex: 10;
+        padding: 10px;
+        border: 1px solid #e3e3e3;
+        border-radius: 3px;
+
+        &:focus {
+          outline: 1px solid #b7b7b7;
+        }
+      }
+
+      .todoButton {
+        flex: 1;
+        border: none;
+        color: white;
+        background-color: #0064ff;
+        border-radius: 3px;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+}
