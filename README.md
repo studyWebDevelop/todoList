@@ -1,50 +1,17 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![스크린샷 2025-01-18 오후 10 27 57](https://github.com/user-attachments/assets/3c5cbd94-79fd-4713-84fd-0bb55f195105)
 
-Currently, two official plugins are available:
+<h3>TodoList</h3>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+TodoList의 기능들
 
-## Expanding the ESLint configuration
+1. 할 일 조회하기 기능
+2. 할 일 추가하기 기능
+3. 할 일 수정하기 기능
+4. 할 일 삭제하기 기능
+5. 할 일 전체 지우기 기능
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+TodoList는 localStorage를 사용하여 새로고침해도 초기화 되지 않습니다.
+전역상태를 자주 사용해서, 이번에는 useState를 사용하여 지역상태로 props를 전달하여 상태를 관리했습니다.
+최대한 solid 원칙을 지키려고 노력하였으나 수정하기 기능은 solid원칙이 잘 적용되지 못했습니다.
