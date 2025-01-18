@@ -2,12 +2,15 @@ import { Draggable } from "react-beautiful-dnd";
 import { TodoContentsType } from "../../interface/todoContents.interface";
 import st from "./todoContent.module.scss";
 import clsx from "clsx";
-import React from "react";
+import React, { useState } from "react";
 
 interface TodoContentProps extends TodoContentsType {
+  idx: number;
+  todoList: TodoContentsType[];
+  setTodoList: React.Dispatch<React.SetStateAction<TodoContentsType[]>>;
   handleCompletedTodo: (id: number) => void;
   handleRemoveTodo: (id: number) => void;
-  idx: number;
+  handleChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const TodoContent = React.memo(
@@ -16,9 +19,33 @@ const TodoContent = React.memo(
     idx,
     title,
     completed,
+    todoList,
+    setTodoList,
     handleCompletedTodo,
     handleRemoveTodo,
   }: TodoContentProps) => {
+    const [editTodoTitle, setEditTodoTitle] = useState(title);
+    const [isEdit, setIsEdit] = useState(false);
+
+    const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setEditTodoTitle(e.target.value);
+    };
+
+    const handleIsEdit = () => {
+      setIsEdit(!isEdit);
+    };
+
+    const onSaveTodo = () => {
+      const updatedTodoList = todoList.map((todoContent) =>
+        todoContent.id === id
+          ? { ...todoContent, title: editTodoTitle }
+          : todoContent
+      );
+
+      setTodoList(updatedTodoList);
+      setIsEdit(false);
+    };
+
     return (
       <Draggable draggableId={id.toString()} index={idx}>
         {(provided, snapshot) => (
@@ -31,24 +58,44 @@ const TodoContent = React.memo(
             ref={provided.innerRef}
             {...provided.dragHandleProps}
           >
-            <div>
+            {isEdit ? (
               <input
-                type="checkbox"
-                defaultChecked={completed}
-                onClick={() => handleCompletedTodo(id)}
+                className={st.modifyInput}
+                type="text"
+                value={editTodoTitle}
+                onChange={handleChangeTitle}
               />
-              <span
-                className={clsx(st.todoText, completed && st.completedText)}
+            ) : (
+              <div>
+                <input
+                  type="checkbox"
+                  defaultChecked={completed}
+                  onClick={() => handleCompletedTodo(id)}
+                />
+                <span
+                  className={clsx(st.todoText, completed && st.completedText)}
+                >
+                  {title}
+                </span>
+              </div>
+            )}
+            <div className={st.buttonWrapper}>
+              <div onClick={handleIsEdit}>
+                {isEdit ? (
+                  <button type="button" onClick={onSaveTodo}>
+                    save
+                  </button>
+                ) : (
+                  "edit"
+                )}
+              </div>
+              <button
+                onClick={() => handleRemoveTodo(id)}
+                className={st.deleteTodoButton}
               >
-                {title}
-              </span>
+                x
+              </button>
             </div>
-            <button
-              onClick={() => handleRemoveTodo(id)}
-              className={st.deleteTodoButton}
-            >
-              x
-            </button>
           </div>
         )}
       </Draggable>

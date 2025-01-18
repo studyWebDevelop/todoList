@@ -31,6 +31,7 @@ const useApp = () => {
       id: todoList.length,
       title: inputValue,
       completed: false,
+      isEdit: false,
     };
 
     setTodoList((prevTodoList) => [...prevTodoList, newTodoContent]);
@@ -76,6 +77,7 @@ const useApp = () => {
   return {
     inputValue,
     todoList,
+    setTodoList,
     handleRemoveTodo,
     handleChangeInput,
     handleAddTodo,

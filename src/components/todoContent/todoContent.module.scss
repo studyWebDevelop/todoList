@@ -8,13 +8,29 @@
   border-radius: 3px;
   margin-bottom: 6px;
 
-  .deleteTodoButton {
-    color: white;
-    background-color: rgb(158, 158, 158);
-    border: none;
-    padding: 5px 9px;
-    border-radius: 50%;
-    cursor: pointer;
+  .buttonWrapper {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    .deleteTodoButton {
+      color: white;
+      background-color: rgb(158, 158, 158);
+      border: none;
+      padding: 5px 9px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+
+  .modifyInput {
+    padding: 8px;
+    min-width: 250px;
+    border: 1px solid #e3e3e3;
+    border-radius: 3px;
+
+    &:focus {
+      outline: 1px solid #b7b7b7;
+    }
   }
 
   .todoText {

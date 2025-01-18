@@ -8,6 +8,7 @@ function App() {
   const {
     todoList,
     inputValue,
+    setTodoList, // 개방 폐쇠성 원칙을 위반함
     handleRemoveTodo,
     handleChangeInput,
     handleAddTodo,
@@ -35,6 +36,9 @@ function App() {
                     key={todoContent.id}
                     {...todoContent}
                     idx={idx}
+                    todoList={todoList}
+                    setTodoList={setTodoList}
+                    handleChangeInput={handleChangeInput}
                     handleRemoveTodo={handleRemoveTodo}
                     handleCompletedTodo={handleCompletedTodo}
                   />
