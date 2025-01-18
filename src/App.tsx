@@ -1,6 +1,7 @@
 import st from "./App.module.scss";
+import TodoContent from "./components/todoContent";
+import TodoInput from "./components/todoInput";
 import useApp from "./hooks/useApp";
-import clsx from "clsx";
 
 function App() {
   const {
@@ -20,42 +21,19 @@ function App() {
         </div>
 
         {todoList.map((todoContent) => (
-          <div className={st.todoContentContainer} key={todoContent.id}>
-            <div>
-              <input
-                type="checkbox"
-                defaultChecked={todoContent.completed}
-                onClick={() => handleCompletedTodo(todoContent.id)}
-              />
-              <span className={clsx(todoContent.completed && st.completedText)}>
-                {todoContent.title}
-              </span>
-            </div>
-            <button
-              onClick={() => handleRemoveTodo(todoContent.id)}
-              className={st.deleteTodoButton}
-            >
-              x
-            </button>
-          </div>
+          <TodoContent
+            key={todoContent.id}
+            {...todoContent}
+            handleRemoveTodo={handleRemoveTodo}
+            handleCompletedTodo={handleCompletedTodo}
+          />
         ))}
 
-        <form className={st.todoInputWrapper} onSubmit={handleAddTodo}>
-          <input
-            className={st.todoInput}
-            type="text"
-            name="value"
-            placeholder="해아할 일을 입력해주세요."
-            value={inputValue}
-            onChange={handleChangeInput}
-          />
-          <input
-            type="button"
-            value="입력"
-            className={st.todoButton}
-            onClick={handleAddTodo}
-          />
-        </form>
+        <TodoInput
+          handleAddTodo={handleAddTodo}
+          inputValue={inputValue}
+          handleChangeInput={handleChangeInput}
+        />
       </div>
     </div>
   );

@@ -1,0 +1,27 @@
+.todoContentContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px;
+  background-color: #eaeaea;
+  border-radius: 3px;
+  margin-bottom: 6px;
+
+  .deleteTodoButton {
+    color: white;
+    background-color: rgb(158, 158, 158);
+    border: none;
+    padding: 5px 9px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .todoText {
+    margin-left: 5px;
+  }
+
+  .completedText {
+    text-decoration: line-through;
+  }
+}

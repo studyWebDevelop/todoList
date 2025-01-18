@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import type { TodoContentsType } from "../interface/todoContents.interface";
-import { todoContents } from "../constants/todoContents";
 
 const useApp = () => {
-  const [todoList, setTodoList] = useState<TodoContentsType[]>(todoContents);
+  const [todoList, setTodoList] = useState<TodoContentsType[]>([]);
 
   const [inputValue, setInputValue] = useState("");
 
