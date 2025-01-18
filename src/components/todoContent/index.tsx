@@ -43,6 +43,8 @@ const TodoContent = React.memo(
       );
 
       setTodoList(updatedTodoList);
+      localStorage.setItem("todoList", JSON.stringify(updatedTodoList));
+
       setIsEdit(false);
     };
 

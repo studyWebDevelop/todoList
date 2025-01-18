@@ -3,7 +3,11 @@ import type { TodoContentsType } from "../interface/todoContents.interface";
 import type { DropResult } from "react-beautiful-dnd";
 
 const useApp = () => {
-  const [todoList, setTodoList] = useState<TodoContentsType[]>([]);
+  const initialTodoData = localStorage.getItem("todoList")
+    ? JSON.parse(localStorage.getItem("todoList") as string)
+    : [];
+
+  const [todoList, setTodoList] = useState<TodoContentsType[]>(initialTodoData);
 
   const [inputValue, setInputValue] = useState("");
 
@@ -14,6 +18,7 @@ const useApp = () => {
       );
 
       setTodoList(filterContents);
+      localStorage.setItem("todoList", JSON.stringify(filterContents));
     },
     [todoList]
   );
@@ -35,6 +40,11 @@ const useApp = () => {
     };
 
     setTodoList((prevTodoList) => [...prevTodoList, newTodoContent]);
+    localStorage.setItem(
+      "todoList",
+      JSON.stringify([...todoList, newTodoContent])
+    );
+
     setInputValue("");
   };
 
@@ -50,13 +60,15 @@ const useApp = () => {
       );
 
       setTodoList(completedTodo);
+      localStorage.setItem("todoList", JSON.stringify(completedTodo));
     },
     [todoList]
   );
 
-  const handleRemoveAllTodo = useCallback(() => {
+  const handleRemoveAllTodo = () => {
     setTodoList([]);
-  }, []);
+    localStorage.setItem("todoList", JSON.stringify([]));
+  };
 
   const handleDragEnd = useCallback(
     (result: DropResult) => {
@@ -69,7 +81,9 @@ const useApp = () => {
       const [새롭게정렬된todo] = newTodoList.splice(result.source.index, 1);
 
       newTodoList.splice(result.destination.index, 0, 새롭게정렬된todo);
+
       setTodoList(newTodoList);
+      localStorage.setItem("todoList", JSON.stringify(newTodoList));
     },
     [todoList]
   );
