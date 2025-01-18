@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import type { TodoContentsType } from "../interface/todoContents.interface";
 import type { DropResult } from "react-beautiful-dnd";
 
@@ -7,13 +7,16 @@ const useApp = () => {
 
   const [inputValue, setInputValue] = useState("");
 
-  const handleRemoveTodo = (id: number) => {
-    const filterContents = todoList.filter(
-      (todoContent) => todoContent.id !== id
-    );
+  const handleRemoveTodo = useCallback(
+    (id: number) => {
+      const filterContents = todoList.filter(
+        (todoContent) => todoContent.id !== id
+      );
 
-    setTodoList(filterContents);
-  };
+      setTodoList(filterContents);
+    },
+    [todoList]
+  );
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -34,35 +37,41 @@ const useApp = () => {
     setInputValue("");
   };
 
-  const handleCompletedTodo = (id: number) => {
-    const completedTodo = todoList.map((todoContent) =>
-      todoContent.id === id
-        ? {
-            ...todoContent,
-            completed: !todoContent.completed,
-          }
-        : todoContent
-    );
+  const handleCompletedTodo = useCallback(
+    (id: number) => {
+      const completedTodo = todoList.map((todoContent) =>
+        todoContent.id === id
+          ? {
+              ...todoContent,
+              completed: !todoContent.completed,
+            }
+          : todoContent
+      );
 
-    setTodoList(completedTodo);
-  };
+      setTodoList(completedTodo);
+    },
+    [todoList]
+  );
 
-  const handleRemoveAllTodo = () => {
+  const handleRemoveAllTodo = useCallback(() => {
     setTodoList([]);
-  };
+  }, []);
 
-  const handleDragEnd = (result: DropResult) => {
-    console.log(result);
+  const handleDragEnd = useCallback(
+    (result: DropResult) => {
+      console.log(result);
 
-    if (!result.destination) return;
+      if (!result.destination) return;
 
-    const newTodoList = todoList;
+      const newTodoList = todoList;
 
-    const [새롭게정렬된todo] = newTodoList.splice(result.source.index, 1);
+      const [새롭게정렬된todo] = newTodoList.splice(result.source.index, 1);
 
-    newTodoList.splice(result.destination.index, 0, 새롭게정렬된todo);
-    setTodoList(newTodoList);
-  };
+      newTodoList.splice(result.destination.index, 0, 새롭게정렬된todo);
+      setTodoList(newTodoList);
+    },
+    [todoList]
+  );
 
   return {
     inputValue,
